@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HelpActivity">
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="24dp"
+        android:text="Help"
+        android:textSize="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="409dp"
+        android:layout_height="610dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="29dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Purpose of the App"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:padding="6dp"
+                android:text="The purpose of this app is to help people with their finances. Keeping track of transactions, bills, and a budget can be time consuming using pencil and paper. This app allows the user to track all of these to stay up to date on how they are spending their money."
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:text="Preferences"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="6dp"
+                android:text="Currencies: Allows the user to change which currency they use on the app."
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="6dp"
+                android:text="Change Password: This allows the user to change the password to their account."
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="6dp"
+                android:text="Dark Mode: Allows the user to change the overall theme of the a darker color."
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Technologies Used"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:text="Language: Kotlin"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:text="IDE: Android Studio"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:text="Database: SQLite"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Creator"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:text="Brayden Scott"
+                android:textAlignment="center" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

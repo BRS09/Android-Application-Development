@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/billName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="65dp"
+        android:ems="10"
+        android:hint="Bill Name"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/billCategoryRadioGroup"
+        android:layout_width="281dp"
+        android:layout_height="290dp"
+        android:layout_marginStart="65dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+        <RadioButton
+            android:id="@+id/phoneBillRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone" />
+
+        <RadioButton
+            android:id="@+id/utilitiesBillRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Utilities" />
+
+        <RadioButton
+            android:id="@+id/transportBillRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Transportation" />
+
+        <RadioButton
+            android:id="@+id/subscriptBillRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subscription" />
+
+        <RadioButton
+            android:id="@+id/creditBillRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Credit Card" />
+
+        <RadioButton
+            android:id="@+id/personalBillRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personal" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="36dp"
+        android:text="Bill Category:"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/billName" />
+
+    <EditText
+        android:id="@+id/billDueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:hint="Due Date"
+        android:inputType="date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/costOfBill" />
+
+    <EditText
+        android:id="@+id/costOfBill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Cost of Bill"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/billCategoryRadioGroup" />
+
+    <Button
+        android:id="@+id/addBillButton"
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="35dp"
+        android:text="Add"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/billDueDate" />
+</androidx.constraintlayout.widget.ConstraintLayout>

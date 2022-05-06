@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.courseproject">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CourseProject">
+        <activity
+            android:name=".HelpActivity"
+            android:exported="false"
+            android:parentActivityName=".SecondaryActivity"/>
+        <activity
+            android:name=".PreferencesActivity"
+            android:exported="false"
+            android:parentActivityName=".SecondaryActivity"/>
+        <activity
+            android:name=".BudgetActivity"
+            android:exported="false"
+            android:parentActivityName=".SecondaryActivity" />
+        <activity
+            android:name=".BillsActivity"
+            android:exported="false"
+            android:parentActivityName=".SecondaryActivity" />
+        <activity
+            android:name=".TransactionActivity"
+            android:exported="false"
+            android:parentActivityName=".SecondaryActivity" />
+        <activity
+            android:name=".InformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SecondaryActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".InformationActivity"
+            android:persistableMode="persistAcrossReboots" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>
