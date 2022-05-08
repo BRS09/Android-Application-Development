@@ -30,29 +30,28 @@ class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Curso
         db.close()
     }
 
-    fun findTransaction(transactionName: String?): Transaction? {
-        val query = "SELECT * FROM $TABLE_TRANSACTIONS WHERE $COLUMN_TRANSACTIONNAME = \"$transactionName\""
+    fun findTransactions(): ArrayList<Transaction> {
+        val query = "SELECT * FROM $TABLE_TRANSACTIONS"
+        val transactions = ArrayList<Transaction>()
 
         val db = this.writableDatabase
         val cursor = db.rawQuery(query, null)
         var transaction: Transaction? = null
 
         if(cursor.moveToFirst()){
-            cursor.moveToFirst()
+            while(cursor.isAfterLast == false){
+                val id = Integer.parseInt(cursor.getString(0))
+                val name = cursor.getString(1)
+                val price = cursor.getString(2).toDouble()
+                val total = cursor.getString(3).toDouble()
+                val category = cursor.getString(4)
+                val date = cursor.getString(5)
 
-            val id = Integer.parseInt(cursor.getString(0))
-            val name = cursor.getString(1)
-            val price = cursor.getString(2).toDouble()
-            val total = cursor.getString(3).toDouble()
-            val category = cursor.getString(4)
-            val date = cursor.getString(5)
-
-            transaction = Transaction(id, name, price, total, date)
-            cursor.close()
+                transactions.add(Transaction(id, name, price, total, category, date))
+                cursor.moveToNext()
+            }
         }
-
-        db.close()
-        return transaction
+        return transactions
     }
 
     fun deleteTransaction(transactionName: String?): Boolean {

@@ -8,7 +8,7 @@ class Transaction {
     var transactionCategory: String? = null
     var transactionDate: String? = null
 
-    constructor(id: Int, transactionName: String, transactionPrice: Double, transactionTotal: Double, transactionDate: String){
+    constructor(id: Int, transactionName: String, transactionPrice: Double, transactionTotal: Double, transactionCategory: String, transactionDate: String){
         this.id = id
         this.transactionName = transactionName
         this.transactionPrice = transactionPrice

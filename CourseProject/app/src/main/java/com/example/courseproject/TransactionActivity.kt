@@ -12,14 +12,18 @@ import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.activity_transaction.*
 import kotlinx.android.synthetic.main.add_transaction.*
 import java.text.DecimalFormat
+import kotlin.reflect.full.memberProperties
 
 class TransactionActivity : AppCompatActivity() {
     companion object{
         var amountAndCategory: HashMap<String, Double> = HashMap()
     }
+    lateinit var dbHandler: MyDBHandler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction)
+        dbHandler = MyDBHandler(this, null, null, 1)
 
         var transaction: Transaction? = null
         val mainLayout: ConstraintLayout = findViewById(R.id.transactionActivity)
@@ -55,6 +59,7 @@ class TransactionActivity : AppCompatActivity() {
                     }
 
                     transaction?.transactionName = transactionName.text.toString()
+                    transaction?.transactionPrice = transactionAmount.text.toString().toDouble()
                     transaction?.transactionTotal = transTotal
                     transaction?.transactionDate = transactionDate.text.toString()
 
@@ -64,7 +69,6 @@ class TransactionActivity : AppCompatActivity() {
                         val textView: TextView = TextView(this)
                         if(n == transactionAmount.text) {
                             textView.text = decimalFormat.format(n.toString().toDouble())
-                            transaction?.transactionPrice = transactionAmount.text.toString().toDouble()
                         }
                         else textView.text = n.toString()
                         row.addView(textView, tableRowParams)
@@ -73,11 +77,25 @@ class TransactionActivity : AppCompatActivity() {
                     }
 
                     amountAndCategory.put(radioString, transAmount)
+                    dbHandler.addTransaction(transaction!!)
 
                     tableLayout.addView(row)
                     mainLayout.removeView(transPopUp)
                     transactionActivity.addView(floatingActionButton)
                 }
+            }
+        }
+    }
+
+    fun showAllTransactions(view: View){
+        var dbHandler = MyDBHandler(this, null, null, 1)
+        var transactions = dbHandler.findTransactions()
+        transactions.forEach{
+            val row = TableRow(this)
+            it::class.memberProperties.forEach{members ->
+                var textView = TextView(this)
+                textView.text = members.getter.toString()
+                row.addView(textView)
             }
         }
     }
