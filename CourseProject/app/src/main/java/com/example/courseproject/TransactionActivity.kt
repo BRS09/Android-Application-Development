@@ -21,6 +21,7 @@ class TransactionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction)
 
+        var transaction: Transaction? = null
         val mainLayout: ConstraintLayout = findViewById(R.id.transactionActivity)
         val actionbar = supportActionBar
         var transTotal = 0.0
@@ -45,23 +46,27 @@ class TransactionActivity : AppCompatActivity() {
                     transactionTotal.text = decimalFormat.format(transTotal)
 
                     when(transCategoryRadioGroup.checkedRadioButtonId){
-                        foodRadioButton.id -> radioString = "Food"
-                        utilitiesRadioButton.id -> radioString = "Utilities"
-                        transportRadioButton.id -> radioString = "Transportation"
-                        entertainRadioButton.id -> radioString = "Entertainment"
-                        shoppingRadioButton.id -> radioString = "Shopping"
-                        personalRadioButton.id -> radioString = "Personal"
+                        foodRadioButton.id -> transaction?.transactionCategory = "Food"
+                        utilitiesRadioButton.id -> transaction?.transactionCategory = "Utilities"
+                        transportRadioButton.id -> transaction?.transactionCategory = "Transportation"
+                        entertainRadioButton.id -> transaction?.transactionCategory = "Entertainment"
+                        shoppingRadioButton.id -> transaction?.transactionCategory = "Shopping"
+                        personalRadioButton.id -> transaction?.transactionCategory = "Personal"
                     }
 
-                    val arr = arrayOf(transactionName.text, transactionAmount.text, radioString, transactionDate.text)
+                    transaction?.transactionName = transactionName.text.toString()
+                    transaction?.transactionTotal = transTotal
+                    transaction?.transactionDate = transactionDate.text.toString()
+
+                    val arr = arrayOf(transaction?.transactionName, transaction?.transactionPrice, transaction?.transactionCategory, transaction?.transactionDate)
 
                     for(n in arr){
                         val textView: TextView = TextView(this)
                         if(n == transactionAmount.text) {
                             textView.text = decimalFormat.format(n.toString().toDouble())
-                            transAmount = transactionAmount.text.toString().toDouble()
+                            transaction?.transactionPrice = transactionAmount.text.toString().toDouble()
                         }
-                        else textView.text = n
+                        else textView.text = n.toString()
                         row.addView(textView, tableRowParams)
                         textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
                         textView.setPadding(0, 8, 0, 8)
