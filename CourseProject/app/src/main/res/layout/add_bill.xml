@@ -6,106 +6,109 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/billName"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="65dp"
-        android:ems="10"
-        android:hint="Bill Name"
-        android:inputType="textPersonName"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <RadioGroup
-        android:id="@+id/billCategoryRadioGroup"
-        android:layout_width="281dp"
-        android:layout_height="290dp"
-        android:layout_marginStart="65dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6">
-
-        <RadioButton
-            android:id="@+id/phoneBillRadioButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Phone" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/utilitiesBillRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Utilities" />
+            <EditText
+                android:id="@+id/billName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:ems="10"
+                android:hint="Bill Name"
+                android:inputType="textPersonName" />
 
-        <RadioButton
-            android:id="@+id/transportBillRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Transportation" />
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Bill Category:"
+                android:textSize="20sp" />
 
-        <RadioButton
-            android:id="@+id/subscriptBillRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Subscription" />
+            <RadioGroup
+                android:id="@+id/billCategoryRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/creditBillRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Credit Card" />
+                <RadioButton
+                    android:id="@+id/phoneBillRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Phone" />
 
-        <RadioButton
-            android:id="@+id/personalBillRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Personal" />
-    </RadioGroup>
+                <RadioButton
+                    android:id="@+id/utilitiesBillRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Utilities" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="36dp"
-        android:text="Bill Category:"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/billName" />
+                <RadioButton
+                    android:id="@+id/transportBillRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Transportation" />
 
-    <EditText
-        android:id="@+id/billDueDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:hint="Due Date"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/costOfBill" />
+                <RadioButton
+                    android:id="@+id/subscriptBillRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Subscription" />
 
-    <EditText
-        android:id="@+id/costOfBill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Cost of Bill"
-        android:inputType="numberDecimal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/billCategoryRadioGroup" />
+                <RadioButton
+                    android:id="@+id/creditBillRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Credit Card" />
 
-    <Button
-        android:id="@+id/addBillButton"
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="35dp"
-        android:text="Add"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/billDueDate" />
+                <RadioButton
+                    android:id="@+id/personalBillRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Personal" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/billDueDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:ems="10"
+                android:hint="Due Date"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/costOfBill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:ems="10"
+                android:hint="Cost of Bill"
+                android:inputType="numberDecimal" />
+
+            <Button
+                android:id="@+id/addBillButton"
+                android:layout_width="150dp"
+                android:layout_height="55dp"
+                android:layout_marginBottom="30dp"
+                android:text="Add" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

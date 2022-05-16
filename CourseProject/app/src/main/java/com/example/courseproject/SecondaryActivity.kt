@@ -1,30 +1,40 @@
 package com.example.courseproject
 
 import android.content.Intent
-import android.icu.text.NumberFormat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import kotlinx.android.synthetic.main.activity_information.*
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_secondary.*
-import kotlinx.android.synthetic.main.activity_transaction.*
 import java.text.DecimalFormat
-import java.text.Format
 
 class SecondaryActivity : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
+    var db = Firebase.firestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_secondary)
 
-        //Extras used in the secondary activity
-        val extras = intent.extras
-        var userIncome = extras?.getDouble("userIncome")
-        var username = extras?.getString("username").toString()
+        auth = FirebaseAuth.getInstance()
 
-        //Set the introMessage and userIncomeText textViews
-        introMessage.text = "Hello, " + username + "!"
-        userIncomeText.text = DecimalFormat("$##,###").format(userIncome)
+        db.collection("UserInfo")
+            .whereEqualTo("Username", auth.currentUser?.email)
+            .get()
+            .addOnSuccessListener{ documents ->
+                for (document in documents){
+                    userIncomeText.text = DecimalFormat("$##,###.##").format(document.get("Income").toString().toDouble())
+                }
+            }
+
+        logoutBtn.setOnClickListener {
+            auth.signOut()
+            startActivity(Intent(this, MainActivity::class.java))
+        }
 
         transactionButton.setOnClickListener {
             val transactionIntent = Intent(this, TransactionActivity::class.java)
@@ -36,16 +46,6 @@ class SecondaryActivity : AppCompatActivity() {
             val billsIntent = Intent(this, BillsActivity::class.java)
 
             startActivity(billsIntent)
-        }
-
-        budgetButton.setOnClickListener {
-            val budgetIntent = Intent(this, BudgetActivity::class.java)
-
-            intent.putExtra("radioString", Intent(this,TransactionActivity::class.java).extras?.getString("radioString"))
-
-            budgetIntent.putExtra("transAmount", intent.extras?.getDouble("transAmount"))
-
-            startActivity(budgetIntent)
         }
 
         helpButton.setOnClickListener {

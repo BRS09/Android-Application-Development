@@ -6,29 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".HelpActivity">
 
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="24dp"
-        android:text="Help"
-        android:textSize="35dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="610dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="29dp"
+        android:id="@+id/scrollView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:text="Help"
+                android:textAlignment="center"
+                android:textSize="35dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView18" />
 
             <TextView
                 android:id="@+id/textView17"
@@ -134,6 +138,7 @@
                 android:id="@+id/textView28"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
                 android:padding="6dp"
                 android:text="Brayden Scott"
                 android:textAlignment="center" />

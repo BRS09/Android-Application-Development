@@ -11,104 +11,55 @@
         android:id="@+id/billsActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="315dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="40dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <TextView
         android:id="@+id/transactionTotalText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginStart="107dp"
+        android:layout_marginTop="56dp"
         android:layout_marginEnd="104dp"
         android:text="Total of Bills:"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/billsTotal"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="130dp"
         android:layout_marginEnd="131dp"
         android:textAlignment="center"
         android:textSize="29sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/transactionTotalText2" />
 
-    <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="504dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="25dp"
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/billsTotal">
 
-        <LinearLayout
-            android:id="@+id/transScrollView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewTwo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
-            <TableLayout
-                android:id="@+id/tableLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="center">
-
-                    <TextView
-                        android:id="@+id/textView8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="fill"
-                        android:text="Name"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textView11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="fill"
-                        android:text="Amount"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="fill"
-                        android:text="Category"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="fill"
-                        android:text="Due Date"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-
-                </TableRow>
-            </TableLayout>
-
-        </LinearLayout>
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

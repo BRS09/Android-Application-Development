@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.courseproject">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,11 +18,8 @@
         <activity
             android:name=".PreferencesActivity"
             android:exported="false"
-            android:parentActivityName=".SecondaryActivity"/>
-        <activity
-            android:name=".BudgetActivity"
-            android:exported="false"
-            android:parentActivityName=".SecondaryActivity" />
+            android:parentActivityName=".SecondaryActivity"
+            android:persistableMode="persistAcrossReboots" />
         <activity
             android:name=".BillsActivity"
             android:exported="false"
@@ -30,16 +29,13 @@
             android:exported="false"
             android:parentActivityName=".SecondaryActivity" />
         <activity
-            android:name=".InformationActivity"
-            android:exported="false" />
-        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".SecondaryActivity"
             android:exported="false"
             android:launchMode="singleTop"
-            android:parentActivityName=".InformationActivity"
+            android:parentActivityName=".MainActivity"
             android:persistableMode="persistAcrossReboots" />
         <activity
             android:name=".MainActivity"

@@ -1,15 +1,23 @@
 package com.example.courseproject
 
+import android.graphics.Color
+import android.graphics.Color.BLACK
+import android.graphics.Color.DKGRAY
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_bills.*
+import kotlinx.android.synthetic.main.activity_transaction.*
 import kotlinx.android.synthetic.main.add_bill.*
 import kotlinx.android.synthetic.main.add_bill.creditBillRadioButton
 import kotlinx.android.synthetic.main.add_bill.subscriptBillRadioButton
@@ -19,37 +27,33 @@ import kotlinx.android.synthetic.main.add_transaction.*
 import java.text.DecimalFormat
 
 class BillsActivity : AppCompatActivity() {
+    private var mDbAdapter: MyDBHandler? = null
+    private lateinit var adapter: MyRecyclerViewAdapter
+    private var totalOfBills: Double = 0.0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bills)
-
-        val decimalFormat = DecimalFormat("$##,###.##")
         val mainLayout: ConstraintLayout = findViewById(R.id.billsActivity)
-        var totalOfBills = 0.0
+        val decimalFormat = DecimalFormat("$##,###.##")
         val actionbar = supportActionBar
 
+        initializeDatabase()
+        loadList()
+
         val billsPopUp: View = LayoutInflater.from(this).inflate(R.layout.add_bill, mainLayout, false)
-        billsPopUp.setBackgroundColor(ContextCompat.getColor(this, androidx.appcompat.R.color.tooltip_background_light))
 
         actionbar?.setDisplayHomeAsUpEnabled(true)
 
         billsActionButton.setOnClickListener {
+            billsActivity.removeAllViews()
             mainLayout.addView(billsPopUp)
-            billsActivity.removeView(billsActionButton)
 
-            if(addBillButton.isVisible){
                 addBillButton?.setOnClickListener {
-                    val row: TableRow = TableRow(this)
-                    val tableRowParams: TableRow.LayoutParams = TableRow.LayoutParams (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f)
-                    val billName = billName.text
-                    val billCategory = billCategoryRadioGroup.checkedRadioButtonId
-                    var billCategorySelected: String? = null
-                    val billCost = costOfBill.text.toString()
-                    val billDueDate = billDueDate.text
-                    totalOfBills = totalOfBills.plus(billCost.toDouble())
-                    billsTotal.text = decimalFormat.format(totalOfBills)
+                    var billCategorySelected: String = ""
+                    totalOfBills = totalOfBills.plus(costOfBill.text.toString().toDouble())
 
-                    when(billCategory){
+                    when(billCategoryRadioGroup.checkedRadioButtonId){
                         phoneBillRadioButton.id -> billCategorySelected = "Phone"
                         utilitiesBillRadioButton.id -> billCategorySelected = "Utilities"
                         transportBillRadioButton.id -> billCategorySelected = "Transportation"
@@ -58,22 +62,39 @@ class BillsActivity : AppCompatActivity() {
                         personalBillRadioButton.id -> billCategorySelected = "Personal"
                     }
 
-                    val billsArr = arrayOf(billName, billCost, billCategorySelected, billDueDate)
+                    var userBill: UserBill = UserBill(billName.text.toString(), costOfBill.text.toString().toDouble(), billCategorySelected, billDueDate.text.toString())
 
-                    for(n in billsArr){
-                        val billTextView: TextView = TextView(this)
-                        if(n == billCost) billTextView.text = decimalFormat.format(n.toString().toDouble())
-                        else billTextView.text = n
-                        row.addView(billTextView, tableRowParams)
-                        billTextView.textAlignment = View.TEXT_ALIGNMENT_CENTER
-                        billTextView.setPadding(0, 8, 0, 8)
-                    }
+                    mDbAdapter?.insertBill(userBill.transactionName, userBill.transactionPrice, userBill.transactionCategory, userBill.transactionDate)
 
-                    tableLayout.addView(row)
                     mainLayout.removeView(billsPopUp)
                     billsActivity.addView(billsActionButton)
+                    recreate()
                 }
-            }
         }
+    }
+
+    private fun initializeDatabase(){
+        mDbAdapter = MyDBHandler(this@BillsActivity)
+        mDbAdapter?.open()
+    }
+
+    private fun loadList() {
+        val allBills = mDbAdapter?.selectAllBills()
+        val listItems = arrayOfNulls<String>(allBills!!.size)
+        var tableRow = TableRow(this)
+
+        for (i in allBills.indices){
+            listItems[i] = allBills[i]
+        }
+
+        var recyclerView: RecyclerView = findViewById(R.id.recyclerViewTwo)
+        var numberOfColumns: Int = 4
+        adapter = MyRecyclerViewAdapter(listItems, totalOfBills, billsTotal)
+        recyclerView.layoutManager = GridLayoutManager(this, numberOfColumns)
+        recyclerView.adapter = adapter
+
+        var params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT)
+        params.weight = 1.0f
+
     }
 }

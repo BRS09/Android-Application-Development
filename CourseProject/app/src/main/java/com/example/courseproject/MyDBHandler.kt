@@ -2,84 +2,94 @@ package com.example.courseproject
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class MyDBHandler(context: Context, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) : SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
-    override fun onCreate(db: SQLiteDatabase){
-        val CREATE_TRANSACTIONS_TABLE = ("CREATE TABLE " + TABLE_TRANSACTIONS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_TRANSACTIONNAME + " TEXT," + COLUMN_TRANSACTIONPRICE + " INTEGER," + COLUMN_TRANSACTIONCATEGORY + " TEXT," + COLUMN_TRANSACTIONDATE + " TEXT" + ")")
-        db.execSQL(CREATE_TRANSACTIONS_TABLE)
+class MyDBHandler(_context: Context) {
+    private val DATABASE_NAME: String = "Database"
+    private var mContext: Context? = null
+    private var mDbHelper: MyDBHelper? = null
+    private var mSQLiteDatabase: SQLiteDatabase? = null
+    private val DATABASE_VERSION = 1
+
+    init {
+        this.mContext = _context
+        mDbHelper = MyDBHelper(_context, DATABASE_NAME, null, DATABASE_VERSION)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int){
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSACTIONS)
-        onCreate(db)
+    fun open(){
+        mSQLiteDatabase = mDbHelper?.writableDatabase
     }
 
-    fun addTransaction(transaction: Transaction){
-        val values = ContentValues()
-        values.put(COLUMN_TRANSACTIONNAME, transaction.transactionName)
-        values.put(COLUMN_TRANSACTIONPRICE, transaction.transactionPrice)
-        values.put(COLUMN_TRANSACTIONTOTAL, transaction.transactionTotal)
-        values.put(COLUMN_TRANSACTIONCATEGORY, transaction.transactionCategory)
-        values.put(COLUMN_TRANSACTIONDATE, transaction.transactionDate)
-
-        val db = this.writableDatabase
-
-        db.insert(TABLE_TRANSACTIONS, null, values)
-        db.close()
-    }
-
-    fun findTransactions(): ArrayList<Transaction> {
-        val query = "SELECT * FROM $TABLE_TRANSACTIONS"
-        val transactions = ArrayList<Transaction>()
-
-        val db = this.writableDatabase
-        val cursor = db.rawQuery(query, null)
-        var transaction: Transaction? = null
-
-        if(cursor.moveToFirst()){
-            while(cursor.isAfterLast == false){
-                val id = Integer.parseInt(cursor.getString(0))
-                val name = cursor.getString(1)
-                val price = cursor.getString(2).toDouble()
-                val total = cursor.getString(3).toDouble()
-                val category = cursor.getString(4)
-                val date = cursor.getString(5)
-
-                transactions.add(Transaction(id, name, price, total, category, date))
-                cursor.moveToNext()
-            }
-        }
-        return transactions
-    }
-
-    fun deleteTransaction(transactionName: String?): Boolean {
-        var result = false
-        val query = "SELECT * FROM $TABLE_TRANSACTIONS WHERE $COLUMN_TRANSACTIONNAME = \"$transactionName\""
-        val db = this.writableDatabase
-        val cursor = db.rawQuery(query, null)
-
-        if(cursor.moveToFirst()){
-            val id = Integer.parseInt(cursor.getString(0))
-            db.delete(TABLE_TRANSACTIONS, COLUMN_ID + " = ?", arrayOf(id.toString()))
-            cursor.close()
-            result = true
+    inner class MyDBHelper(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int): SQLiteOpenHelper(context, name, factory, version){
+        override fun onCreate(_db: SQLiteDatabase?){
+            val query = "CREATE TABLE transactions(id integer primary key autoincrement, transactionname text, transactionprice integer, transactioncategory text, transactiondate text);"
+            val queryTwo = "CREATE TABLE bills(id integer primary key autoincrement, billname text, billprice integer, billcategory text, billdate text);"
+            _db?.execSQL(query)
+            _db?.execSQL(queryTwo)
         }
 
-        db.close()
-        return result
+        override fun onUpgrade(_db: SQLiteDatabase?, _oldVersion: Int, _newVersion: Int){
+            val query = "DROP TABLE IF EXISTS transactions;"
+            val queryTwo = "DROP TABLE IF EXISTS bills;"
+            _db?.execSQL(query)
+            _db?.execSQL(queryTwo)
+            onCreate(_db)
+        }
     }
 
-    companion object {
-        private val DATABASE_VERSION = 1
-        private val DATABASE_NAME = "transactionDB.db"
-        val TABLE_TRANSACTIONS = "transactions"
-        val COLUMN_ID = "_id"
-        val COLUMN_TRANSACTIONNAME = "transactionname"
-        val COLUMN_TRANSACTIONPRICE = "transactionprice"
-        val COLUMN_TRANSACTIONTOTAL = "transactiontotal"
-        val COLUMN_TRANSACTIONCATEGORY = "transactioncategory"
-        val COLUMN_TRANSACTIONDATE = "transactiondate"
+    fun insertTransaction(transactionName: String, transactionPrice: Double, transactionCategory: String, transactionDate: String){
+        val cv: ContentValues = ContentValues()
+        cv.put("transactionname", transactionName)
+        cv.put("transactionprice", transactionPrice)
+        cv.put("transactioncategory", transactionCategory)
+        cv.put("transactiondate", transactionDate)
+
+        mSQLiteDatabase?.insert("transactions", null, cv)
+    }
+
+    fun selectAllTransactions(): List<String> {
+        var allTransactions: MutableList<String> = ArrayList()
+        var cursor: Cursor = mSQLiteDatabase?.rawQuery("SELECT * FROM transactions", null)!!
+        if(cursor.moveToFirst()){
+            do {
+                allTransactions.add(cursor.getString(1).toString())
+                allTransactions.add(cursor.getString(2).toString())
+                allTransactions.add(cursor.getString(3).toString())
+                allTransactions.add(cursor.getString(4).toString())
+            } while(cursor.moveToNext())
+        }
+
+        return allTransactions
+    }
+
+    fun deleteAllTransactions(){
+        mSQLiteDatabase?.delete("transactions", null, null)
+    }
+
+    fun insertBill(billName: String, billPrice: Double, billCategory: String, billDate: String){
+        val cv: ContentValues = ContentValues()
+        cv.put("billname", billName)
+        cv.put("billprice", billPrice)
+        cv.put("billcategory", billCategory)
+        cv.put("billdate", billDate)
+
+        mSQLiteDatabase?.insert("bills", null, cv)
+    }
+
+    fun selectAllBills(): List<String> {
+        var allBills: MutableList<String> = ArrayList()
+        var cursor: Cursor = mSQLiteDatabase?.rawQuery("SELECT * FROM bills", null)!!
+
+        if(cursor.moveToFirst()){
+            do {
+                allBills.add(cursor.getString(1).toString())
+                allBills.add(cursor.getString(2).toString())
+                allBills.add(cursor.getString(3).toString())
+                allBills.add(cursor.getString(4).toString())
+            } while(cursor.moveToNext())
+        }
+        return allBills
     }
 }
